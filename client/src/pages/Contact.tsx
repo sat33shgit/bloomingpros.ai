@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Navigation, Footer } from "@/components/Navigation";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 /**
  * Contact Page
@@ -50,12 +51,12 @@ export default function Contact() {
     e.preventDefault();
     // In a real app, this would send data to a backend
     if (!formData.consent) {
-      alert("Please agree to the communication consent to continue.");
+      toast.error("Please agree to the communication consent to continue.");
       return;
     }
 
-    console.log("Form submitted:", formData);
-    alert("Thank you for reaching out! We'll get back to you soon.");
+    // TODO: send to backend
+    toast.success("Thank you — we'll get back to you soon.");
     setFormData({
       name: "",
       email: "",
