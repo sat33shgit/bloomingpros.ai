@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Blog from "./pages/Blog";
 import Signup from "./pages/Signup";
 import FAQ from "./pages/FAQ";
+import TestCoverageReport from "./pages/TestCoverageReport";
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function Router() {
       <Route path={"/blog"} component={Blog} />
       <Route path={"/login"} component={Login} />
       <Route path={"/faq"} component={FAQ} />
+      <Route path={"/test-coverage"} component={TestCoverageReport} />
       <Route path={"/app/signup"} component={Signup} />
       <Route path={"/terms"} component={Terms} />
       <Route path={"/privacy"} component={Privacy} />
