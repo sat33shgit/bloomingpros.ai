@@ -21,6 +21,7 @@ const SCROLL_TO_TOP_ROUTES = new Set([
   "/companies",
   "/blog",
   "/faq",
+  "/app/signup",
 ]);
 
 /**
@@ -105,7 +106,9 @@ export function Navigation() {
             asChild
             className="bg-gradient-to-r from-[#1F2937] to-[#14B8A6] transition-shadow hover:shadow-lg"
           >
-            <Link href="/app/signup">Join Free PoC</Link>
+            <Link href="/app/signup" onClick={handleNavClick("/app/signup")}>
+              Join Free PoC
+            </Link>
           </Button>
         </div>
 
@@ -141,7 +144,11 @@ export function Navigation() {
               );
             })}
             <Button asChild>
-              <Link href="/app/signup" onClick={() => setMobileMenuOpen(false)} className="w-full">
+              <Link
+                href="/app/signup"
+                onClick={handleNavClick("/app/signup", true)}
+                className="w-full"
+              >
                 <span>Join Free PoC</span>
               </Link>
             </Button>
