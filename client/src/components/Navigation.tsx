@@ -1,7 +1,27 @@
-import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import { useState, type MouseEvent } from "react";
+import { Link, useLocation } from "wouter";
+
+const NAV_ITEMS = [
+  { label: "Home", href: "/" },
+  { label: "For Students", href: "/students" },
+  { label: "For Colleges", href: "/colleges" },
+  { label: "For Companies", href: "/companies" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
+];
+
+const SCROLL_TO_TOP_ROUTES = new Set([
+  "/",
+  "/students",
+  "/colleges",
+  "/companies",
+  "/blog",
+  "/faq",
+]);
 
 /**
  * Navigation Component
@@ -12,35 +32,54 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [location] = useLocation();
 
-  const navItems = [
-    { label: "Home", href: "/" },
-    { label: "For Students", href: "/students" },
-    { label: "For Colleges", href: "/colleges" },
-    { label: "For Companies", href: "/companies" },
-    { label: "About", href: "/about" },
-    { label: "Blog", href: "/blog" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Contact", href: "/contact" },
-  ];
+  const scrollToPageTop = () => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const handleNavClick =
+    (href: string, closeMobileMenu = false) =>
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (closeMobileMenu) {
+        setMobileMenuOpen(false);
+      }
+
+      if (!SCROLL_TO_TOP_ROUTES.has(href)) {
+        return;
+      }
+
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      if (location === href) {
+        event.preventDefault();
+        scrollToPageTop();
+        return;
+      }
+
+      window.setTimeout(scrollToPageTop, 0);
+    };
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
       <div className="container flex items-center justify-between py-4">
-        {/* Logo */}
         <Link href="/">
-          <div className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-8 h-8 bg-gradient-to-br from-[#1F2937] to-[#14B8A6] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">BP</span>
+          <div className="group flex cursor-pointer items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#1F2937] to-[#14B8A6]">
+              <span className="text-lg font-bold text-white">BP</span>
             </div>
-            <span className="font-bold text-lg text-foreground hidden sm:inline">
+            <span className="hidden text-lg font-bold text-foreground sm:inline">
               BloomingPros.ai
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => {
+        <div className="hidden items-center gap-8 md:flex">
+          {NAV_ITEMS.map((item) => {
             const isActive =
               location === item.href || (item.href !== "/" && location.startsWith(item.href));
 
@@ -48,9 +87,10 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={handleNavClick(item.href)}
                 className={`text-sm font-medium transition-colors duration-200 ${
                   isActive
-                    ? "text-white bg-gradient-to-r from-[#1F2937] to-[#14B8A6] px-3 py-1 rounded-full shadow-sm"
+                    ? "rounded-full bg-gradient-to-r from-[#1F2937] to-[#14B8A6] px-3 py-1 text-white shadow-sm"
                     : "text-foreground hover:text-accent"
                 }`}
               >
@@ -60,32 +100,28 @@ export function Navigation() {
           })}
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center gap-4">
-          <Button asChild className="bg-gradient-to-r from-[#1F2937] to-[#14B8A6] hover:shadow-lg transition-shadow">
+        <div className="hidden items-center gap-4 md:flex">
+          <Button
+            asChild
+            className="bg-gradient-to-r from-[#1F2937] to-[#14B8A6] transition-shadow hover:shadow-lg"
+          >
             <Link href="/app/signup">Join Free PoC</Link>
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
+          className="rounded-lg p-2 transition-colors hover:bg-secondary md:hidden"
           aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-white">
-          <div className="container py-4 flex flex-col gap-4">
-            {navItems.map((item) => {
+        <div className="border-t border-border bg-white md:hidden">
+          <div className="container flex flex-col gap-4 py-4">
+            {NAV_ITEMS.map((item) => {
               const isActive =
                 location === item.href || (item.href !== "/" && location.startsWith(item.href));
 
@@ -93,10 +129,10 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors px-2 py-1 ${
+                  onClick={handleNavClick(item.href, true)}
+                  className={`px-2 py-1 text-sm font-medium transition-colors ${
                     isActive
-                      ? "text-white bg-gradient-to-r from-[#1F2937] to-[#14B8A6] rounded-md"
+                      ? "rounded-md bg-gradient-to-r from-[#1F2937] to-[#14B8A6] text-white"
                       : "text-foreground hover:text-accent"
                   }`}
                 >
@@ -106,9 +142,7 @@ export function Navigation() {
             })}
             <Button asChild>
               <Link href="/app/signup" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                <span>
-                  Join Free PoC
-                </span>
+                <span>Join Free PoC</span>
               </Link>
             </Button>
           </div>
@@ -141,7 +175,6 @@ export function Footer() {
         { label: "Contact", href: "/contact" },
         { label: "FAQ", href: "/faq" },
         { label: "Blog", href: "/blog" },
-        { label: "Blog", href: "#" },
       ],
     },
     {
@@ -154,14 +187,13 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-white border-t border-border mt-20">
+    <footer className="mt-20 bg-white border-t border-border">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Brand Section */}
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#1F2937] to-[#14B8A6] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">BP</span>
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#1F2937] to-[#14B8A6]">
+                <span className="text-lg font-bold text-white">BP</span>
               </div>
               <span className="font-bold text-foreground">BloomingPros.ai</span>
             </div>
@@ -170,16 +202,16 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Footer Sections */}
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h4 className="font-semibold text-foreground mb-4 text-sm">
-                {section.title}
-              </h4>
+              <h4 className="mb-4 text-sm font-semibold text-foreground">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-accent"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -189,29 +221,28 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} BloomingPros.ai. All rights reserved.
+            Copyright {currentYear} BloomingPros.ai. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a
               href="#"
-              className="text-muted-foreground hover:text-accent transition-colors"
+              className="text-muted-foreground transition-colors hover:text-accent"
               aria-label="Twitter"
             >
               <span className="text-sm">Twitter</span>
             </a>
             <a
               href="#"
-              className="text-muted-foreground hover:text-accent transition-colors"
+              className="text-muted-foreground transition-colors hover:text-accent"
               aria-label="LinkedIn"
             >
               <span className="text-sm">LinkedIn</span>
             </a>
             <a
               href="#"
-              className="text-muted-foreground hover:text-accent transition-colors"
+              className="text-muted-foreground transition-colors hover:text-accent"
               aria-label="GitHub"
             >
               <span className="text-sm">GitHub</span>

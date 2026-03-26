@@ -7,7 +7,6 @@ import {
   Zap,
   Award,
   ArrowRight,
-  CheckCircle,
 } from "lucide-react";
 
 /**

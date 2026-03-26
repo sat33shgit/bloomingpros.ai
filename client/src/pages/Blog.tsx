@@ -3,14 +3,7 @@ import { Link } from "wouter";
 import { Navigation, Footer } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Search, Calendar, User, Tag, ArrowRight } from "lucide-react";
+import { Search, Calendar, ArrowRight } from "lucide-react";
 
 /**
  * Blog Page

@@ -25,14 +25,14 @@ export default function About() {
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
 
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-hidden">
         {/* Hero Section */}
         <section className="py-20 md:py-32">
           <div className="container">
-            <div className="max-w-3xl">
-              <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6"></div>
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6 mx-auto"></div>
 
-              <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+              <h1 className="mb-6 break-words text-4xl font-bold leading-tight text-foreground sm:text-5xl md:text-6xl">
                 About BloomingPros.ai
               </h1>
 
@@ -48,8 +48,8 @@ export default function About() {
         {/* Our Story Section */}
         <section className="py-20 bg-white border-y border-border">
           <div className="container">
-            <div className="max-w-3xl">
-              <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6"></div>
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6 mx-auto"></div>
 
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8">
                 Our Story
@@ -94,8 +94,8 @@ export default function About() {
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Mission */}
-              <div>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6"></div>
+              <div className="text-center md:text-left">
+                <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6 mx-auto md:mx-0"></div>
                 <h3 className="text-3xl font-bold text-foreground mb-4">Our Mission</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   To reimagine employability by creating a transparent, guided, and
@@ -106,8 +106,8 @@ export default function About() {
               </div>
 
               {/* Vision */}
-              <div>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6"></div>
+              <div className="text-center md:text-left">
+                <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6 mx-auto md:mx-0"></div>
                 <h3 className="text-3xl font-bold text-foreground mb-4">Our Vision</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   A world where employability is determined by skills and capability,
@@ -207,7 +207,7 @@ export default function About() {
                   Our Team
                 </h2>
 
-                <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+                <div className="space-y-6 pb-12 md:pb-16 text-lg text-muted-foreground leading-relaxed">
                 <p>
                   We are a team of experienced technology leaders with deep expertise
                   in enterprise systems, data security, scalable architectures, and
@@ -237,11 +237,14 @@ export default function About() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Amit Ravankar */}
               <div className="bg-white rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="h-64 bg-gradient-to-br from-[#1F2937] to-[#14B8A6] flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl font-bold text-white/30 mb-2">AR</div>
-                    <p className="text-white/60 text-sm">Founder & CEO</p>
-                  </div>
+                <div className="bg-slate-100 px-6 pt-6">
+                    <img
+                      src="/images/team/amit-profile.webp"
+                      alt="Amit Ravankar"
+                      className="h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
+
                 </div>
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-foreground mb-2">
@@ -275,11 +278,13 @@ export default function About() {
 
               {/* Mugdha Gadre */}
               <div className="bg-white rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="h-64 bg-gradient-to-br from-[#14B8A6] to-[#1F2937] flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl font-bold text-white/30 mb-2">MG</div>
-                    <p className="text-white/60 text-sm">Co-Founder</p>
-                  </div>
+                <div className="bg-slate-100 px-6 pt-6">
+                     <img
+                      src="/images/team/mughda-profile.webp"
+                      alt="Mugdha Gadre"
+                      className="h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
                 </div>
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-foreground mb-2">
