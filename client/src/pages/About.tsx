@@ -29,8 +29,8 @@ export default function About() {
         {/* Hero Section */}
         <section className="py-20 md:py-32">
           <div className="container">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6 mx-auto"></div>
+            <div className="max-w-3xl">
+              <div className="h-1 w-16 bg-gradient-to-r from-[#1F2937] to-[#14B8A6] mb-6"></div>
 
               <h1 className="mb-6 break-words text-4xl font-bold leading-tight text-foreground sm:text-5xl md:text-6xl">
                 About BloomingPros.ai
